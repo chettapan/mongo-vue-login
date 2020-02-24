@@ -59,16 +59,21 @@ users.post('/login', (req, res) => {
                     let token = jwt.sign(payload, process.env.SECRET_KEY, {
                         expiresIn: 1440
                     })
-                    res.send(token)
+                    return res.status(200).send(token).json({
+                        success: true,
+                        token: `Bearer ${token}`,
+                        user: user,
+                        msg: "Hurry! You are now logged in."
+                    })
                 } else {
                     res.json({ error: 'User does not exist' })
                 }
             } else {
-                res.json({ error: 'User does not exist' })
+                // res.json({ error: 'User does not exist' })
             }
         })
         .catch(err => {
-            res.send('error: ' + err)
+            // res.send('error: ' + err)
         })
 })
 
